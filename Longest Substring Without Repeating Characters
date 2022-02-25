@@ -1,0 +1,29 @@
+# Sliding-window
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        lengthoflist=len(s)
+        dic=dict()
+        left=0
+        right=0
+        maxlength=0
+        currentlength=0
+        
+        for right in range(lengthoflist):
+            
+            rightelement=s[right]
+            
+            if rightelement in dic and dic[rightelement]>=left:
+                
+                left=dic[rightelement]+1
+                currentlength=right-left+1
+                
+            else:
+                currentlength+=1
+                
+            
+            dic[rightelement]=right
+            maxlength=max(maxlength,currentlength)
+            
+        return maxlength
+        
+        
