@@ -1,0 +1,48 @@
+Approach Sliding Window
+Intuition
+The idea here is that we can take two pointers and create a window, and keep track of the sum of that window. We also want to find which of these windows is the smallest that is also equal to our target number.
+
+Breakdown of algorithm
+Check for edgecases like if we have an empty array or arent provided one
+
+Declare all of our pointers (start, end, window_sum, minimum)
+
+Iterate through list while our start pointer hasn't reached the end
+3a. check to see if our window sum is less than our target sum. If it is we want to increase our window sum and move forward our end pointer
+3b. inner while loop that moves forward our start pointer while our window_sum is greater than or equal to target. We want to check if our current window is smaller than our minimum each iteration and move forward our start pointer
+
+We now will have looped through the entire array. Lets check to make sure we found a valid window. If we did return the smallest window. Else return 0
+
+
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        
+        if nums == None or len(nums) == 0:
+            return 0
+        
+        if nums[0] >= target:
+            return 1
+        
+        start = 0
+        end = 0
+        window_sum = 0
+        minimum = float('inf')
+        
+        while end < len(nums):
+            
+            if window_sum < target:
+                window_sum += nums[end]
+                end += 1
+            
+            while window_sum >= target:
+                if (end - start) < minimum:
+                    minimum = (end - start)
+                window_sum -= nums[start]
+                start  += 1
+                
+        if minimum == float('inf'):
+            return 0
+        else:
+            return minimum
+Time comlexity:-o(n)
+space complexity :- o(1)
